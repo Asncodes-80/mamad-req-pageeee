@@ -90,89 +90,111 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
 
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: [
-                  Text(
-                    "Your method: ",
-                    style: ThemeData().textTheme.headline1!.copyWith(
-                          fontSize: 30.0,
-                          color: Colors.red,
-                        ),
-                  ),
-                  Text(
-                    methodType,
-                    style: ThemeData().textTheme.bodyMedium!.copyWith(
-                          fontSize: 20.0,
-                        ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: TextFormField(
-                initialValue: baseUrl,
-                keyboardType: TextInputType.url,
-                decoration: const InputDecoration(
-                  hintText: "Enter Your BaseURL",
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "Your method ",
+                      style: ThemeData().textTheme.headline1!.copyWith(
+                            fontSize: 30.0,
+                            color: Colors.red,
+                          ),
+                    ),
+                    Text(
+                      methodType,
+                      style: ThemeData().textTheme.bodyMedium!.copyWith(
+                            fontSize: 20.0,
+                          ),
+                    ),
+                  ],
                 ),
-                onChanged: (String onTextChange) =>
-                    setState(() => baseUrl = onTextChange),
               ),
-            ),
-            const SizedBox(height: 10.0),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: TextFormField(
-                initialValue: data,
-                keyboardType: TextInputType.url,
-                decoration: const InputDecoration(
-                  hintText: "Data...",
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextFormField(
+                  initialValue: baseUrl,
+                  keyboardType: TextInputType.url,
+                  decoration: const InputDecoration(
+                    hintText: "Enter Your BaseURL",
+                  ),
+                  onChanged: (String onTextChange) =>
+                      setState(() => baseUrl = onTextChange),
                 ),
-                onChanged: (String onTextChange) =>
-                    setState(() => data = onTextChange),
               ),
-            ),
-            const SizedBox(height: 20.0),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: [
-                  TextButton(
-                    onPressed: () => setState(() => methodType = "POST"),
-                    child: const Text("POST"),
+              const SizedBox(height: 10.0),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextFormField(
+                  initialValue: data,
+                  keyboardType: TextInputType.url,
+                  decoration: const InputDecoration(
+                    hintText: "Data...",
                   ),
-                  const SizedBox(width: 20.0),
-                  ElevatedButton(
-                    onPressed: () => setState(() => methodType = "GET"),
-                    child: const Text("GET"),
-                  ),
-                ],
+                  onChanged: (String onTextChange) =>
+                      setState(() => data = onTextChange),
+                ),
               ),
-            ),
-            const Divider(
-              color: Colors.redAccent,
-              height: 40,
-              thickness: 2,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Card(
-                child: SelectableText(bodyResponse),
+              const SizedBox(height: 20.0),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    TextButton(
+                      onPressed: () => setState(() => methodType = "POST"),
+                      child: const Text("POST"),
+                    ),
+                    const SizedBox(width: 20.0),
+                    ElevatedButton(
+                      onPressed: () => setState(() => methodType = "GET"),
+                      child: const Text("GET"),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              Builder(builder: (BuildContext context) {
+                if (bodyResponse == "") {
+                  return const Text("Data is empty.");
+                }
+
+                return Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 10.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Response",
+                            style: ThemeData().textTheme.headline2!.copyWith(
+                                  fontSize: 26.0,
+                                  color: Colors.red,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                      height: 250,
+                      child: Card(
+                        child: SelectableText(bodyResponse),
+                      ),
+                    ),
+                  ],
+                );
+              }),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
