@@ -54,11 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
     /// Making request by this function
     makeReq({required String baseUrl, required String method}) async {
       try {
+        // Read pem files
         ByteData clientCert = await rootBundle.load("assets/cert.pem");
         ByteData privateKey = await rootBundle.load("assets/key.pem");
 
         (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
             (client) {
+          // Set X509 if want setting default bad certificate callback
           // client.badCertificateCallback =
           //     (X509Certificate cert, String host, int port) => true;
           // return null;
